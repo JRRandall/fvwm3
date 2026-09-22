@@ -2268,13 +2268,6 @@ void HandleEnterNotify(const evh_args_t *ea)
 		char *edge_command = NULL;
 		struct monitor	*m = monitor_get_current();
 
-		if (
-			Scr.UnknownWinFocused != None &&
-			(sf = get_focus_window()) != NULL &&
-			sf == Scr.StolenFocusFvwmWin)
-		{
-			_refocus_stolen_focus_win(ea);
-		}
 		/* check for edge commands */
 		if (ewp->window == m->PanFrameTop.win)
 		{
@@ -2292,6 +2285,15 @@ void HandleEnterNotify(const evh_args_t *ea)
 		{
 			edge_command = m->PanFrameRight.command;
 		}
+
+		if (
+			Scr.UnknownWinFocused != None &&
+			(sf = get_focus_window()) != NULL &&
+			sf == Scr.StolenFocusFvwmWin)
+		{
+			_refocus_stolen_focus_win(ea);
+		}
+
 		if (edge_command && ewp->mode == NotifyUngrab &&
 		    ewp->detail == NotifyAncestor)
 		{
